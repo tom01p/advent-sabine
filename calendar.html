@@ -38,43 +38,24 @@ body {
 
 /* WICHTIG: Bild immer responsive */
 img {
-    max-width: 100%;   /* nie breiter als Bildschirm */
-    height: auto;      /* richtige Proportionen */
+    max-width: 100%;
+    height: auto;
     display: block;
-    margin: 20px auto; /* schön zentriert */
+    margin: 20px auto;
 }
 </style>
 </head>
+
 <body>
-<h1>Adventskalender</h1>
-<div class="grid">
-<div class="door" onclick="openDoor(1)">1</div>
-<div class="door" onclick="openDoor(2)">2</div>
-<div class="door" onclick="openDoor(3)">3</div>
-<div class="door" onclick="openDoor(4)">4</div>
-<div class="door" onclick="openDoor(5)">5</div>
-<div class="door" onclick="openDoor(6)">6</div>
-<div class="door" onclick="openDoor(7)">7</div>
-<div class="door" onclick="openDoor(8)">8</div>
-<div class="door" onclick="openDoor(9)">9</div>
-<div class="door" onclick="openDoor(10)">10</div>
-<div class="door" onclick="openDoor(11)">11</div>
-<div class="door" onclick="openDoor(12)">12</div>
-<div class="door" onclick="openDoor(13)">13</div>
-<div class="door" onclick="openDoor(14)">14</div>
-<div class="door" onclick="openDoor(15)">15</div>
-<div class="door" onclick="openDoor(16)">16</div>
-<div class="door" onclick="openDoor(17)">17</div>
-<div class="door" onclick="openDoor(18)">18</div>
-<div class="door" onclick="openDoor(19)">19</div>
-<div class="door" onclick="openDoor(20)">20</div>
-<div class="door" onclick="openDoor(21)">21</div>
-<div class="door" onclick="openDoor(22)">22</div>
-<div class="door" onclick="openDoor(23)">23</div>
-<div class="door" onclick="openDoor(24)">24</div>
-</div>
+<h1>Adventskalender 2025 für Sabine</h1>
+
+<!-- Random erzeugte Türchen kommen hier rein -->
+<div class="grid" id="kalender"></div>
+
 <div id="content"></div>
+
 <script>
+// ---- Texte unter den Bildern ----
 const texts = {
   1: "Ballett Mahler X Drei Meister",
   2: "Wielandshöhe",
@@ -85,23 +66,48 @@ const texts = {
   7: "Chaumont",
   8: "Chaumont",
   9: "Château d'Amboise",
-  10: "Château Villandry",
-  11: "Nantes",
-  12: "Nantes",
-  13: "Vannes",
-  14: "Vannes",
-  15: "Rochefort-en-Terre",
-  16: "Concarneau",
-  17: "Penmarch",
-  18: "Penmarch",
-  19: "Pointe du Raz",
-  20: "Huelgoat",
-  21: "Le Mans",
-  22: "Mozart Requiem Paulus Kirche",
-  23: "Coburg",
-  24: "Frohe Weihnachten"
+ 10: "Château Villandry",
+ 11: "Nantes",
+ 12: "Nantes",
+ 13: "Vannes",
+ 14: "Vannes",
+ 15: "Rochefort-en-Terre",
+ 16: "Concarneau",
+ 17: "Penmarch",
+ 18: "Penmarch",
+ 19: "Pointe du Raz",
+ 20: "Huelgoat",
+ 21: "Le Mans",
+ 22: "Mozart Requiem Paulus Kirche",
+ 23: "Coburg",
+ 24: "Frohe Weihnachten"
 };
 
+// ---- Random-Shuffle erzeugen ----
+const container = document.getElementById("kalender");
+let doors = [];
+
+// Liste 1–24 erstellen
+for (let i = 1; i <= 24; i++) {
+    doors.push(i);
+}
+
+// Fisher–Yates Shuffle
+for (let i = doors.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [doors[i], doors[j]] = [doors[j], doors[i]];
+}
+
+// Türchen ins Grid schreiben
+doors.forEach(n => {
+    const d = document.createElement("div");
+    d.className = "door";
+    d.innerText = n;
+    d.onclick = () => openDoor(n);
+    container.appendChild(d);
+});
+
+// ---- Tür öffnen ----
 function openDoor(n){
   const today = new Date();
   const day = today.getDate();
@@ -110,10 +116,12 @@ function openDoor(n){
     return;
   }
   document.getElementById('content').innerHTML =
-    '<img src="img_'+String(n).padStart(2,'0')+'.jpeg"><p style="font-size: 1.2em; margin-top: 15px; text-align: center;">' +
+    '<img src="img_'+String(n).padStart(2,'0')+'.jpeg">' +
+    '<p style="font-size: 1.4em; margin-top: 15px; text-align: center;">' +
     (texts[n] || "") +
     '</p>';
 }
 </script>
+
 </body>
 </html>
