@@ -112,4 +112,79 @@ const texts = {
  19: "Pointe du Raz",
  20: "Huelgoat",
  21: "Le Mans",
- 22: "Mozart Requiem Pa
+ 22: "Mozart Requiem Paulus Kirche",
+ 23: "Coburg",
+ 24: "Frohe Weihnachten"
+};
+
+// ----------------- Random-Shuffle -----------------
+const container = document.getElementById("kalender");
+let doors = [];
+
+// Liste 1–24 anlegen
+for (let i = 1; i <= 24; i++) doors.push(i);
+
+// Mischen (Fisher-Yates)
+for (let i = doors.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [doors[i], doors[j]] = [doors[j], doors[i]];
+}
+
+// Türchen rendern
+doors.forEach(n => {
+    const d = document.createElement("div");
+    d.className = "door";
+    d.innerText = n;
+    d.setAttribute("data-door", n);
+
+    // Bereits geöffnete Türchen markieren
+    if (localStorage.getItem("sabine_door_" + n) === "opened") {
+        d.classList.add("opened");
+    }
+
+    d.onclick = () => openDoor(n);
+    container.appendChild(d);
+});
+
+// ----------------- Tür öffnen -----------------
+function openDoor(n){
+  const today = new Date();
+  const day = today.getDate();
+  if(day < n){
+    alert("Erst am " + n + ". Dezember geöffnet!");
+    return;
+  }
+
+  document.getElementById('content').innerHTML =
+    '<img src="img_' + String(n).padStart(2, "0") + '.jpeg">' +
+    '<p style="font-size: 1.4em; margin-top: 15px; text-align: center;">' +
+    (texts[n] || "") +
+    '</p>';
+
+  // Zustand speichern
+  localStorage.setItem("sabine_door_" + n, "opened");
+
+  // Optik ändern
+  const elem = document.querySelector('[data-door="'+n+'"]');
+  if (elem) elem.classList.add("opened");
+}
+
+// ----------------- Schneefall -----------------
+function createSnowflake() {
+    const snow = document.createElement("div");
+    snow.classList.add("snowflake");
+    snow.innerHTML = "❄";
+    snow.style.left = Math.random() * 100 + "vw";
+    snow.style.fontSize = (Math.random() * 12 + 10) + "px";
+    const duration = Math.random() * 5 + 4;
+    snow.style.animationDuration = duration + "s";
+    document.body.appendChild(snow);
+    setTimeout(() => snow.remove(), duration * 1000);
+}
+
+// alle 200 ms eine Flocke
+setInterval(createSnowflake, 200);
+</script>
+
+</body>
+</html>
