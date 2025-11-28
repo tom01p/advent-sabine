@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Adventskalender 2025 für Sabine</title>
+
 <style>
 body {
     font-family: sans-serif;
@@ -17,6 +18,7 @@ body {
     margin: 20px;
 }
 
+/* Türchen-Design */
 .door {
     background: linear-gradient(135deg, #8b0000, #b30000);
     color: #fffbe6;
@@ -31,12 +33,43 @@ body {
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
+/* GOLD-GLOW beim Hover */
 .door:hover {
-    transform: scale(1.07);
-    box-shadow: 0 0 20px rgba(255,215,0,0.7);
+    transform: scale(1.12);
+    box-shadow:
+        0 0 15px rgba(255,215,0,0.7),
+        0 0 30px rgba(255,215,0,0.5),
+        0 0 45px rgba(255,215,0,0.3);
 }
 
-/* WICHTIG: Bild immer responsive */
+/* Geöffnete Türchen (persistent) */
+.opened {
+    background: #aaaaaa !important;
+    color: #ffffff;
+    opacity: 0.6;
+    box-shadow: none !important;
+    transform: none !important;
+    cursor: default;
+}
+
+/* Schneefall */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  font-size: 1em;
+  user-select: none;
+  pointer-events: none;
+  z-index: 9999;
+  animation: snowfall linear infinite;
+}
+
+@keyframes snowfall {
+  0% { transform: translateY(-10vh); opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0; }
+}
+
+/* Bilder responsive */
 img {
     max-width: 100%;
     height: auto;
@@ -47,15 +80,16 @@ img {
 </head>
 
 <body>
+
 <h1>Adventskalender 2025 für Sabine</h1>
 
-<!-- Random erzeugte Türchen kommen hier rein -->
+<!-- Random generierte Türchen -->
 <div class="grid" id="kalender"></div>
 
 <div id="content"></div>
 
 <script>
-// ---- Texte unter den Bildern ----
+// ----------------- Texte für Sabine -----------------
 const texts = {
   1: "Ballett Mahler X Drei Meister",
   2: "Wielandshöhe",
@@ -78,50 +112,4 @@ const texts = {
  19: "Pointe du Raz",
  20: "Huelgoat",
  21: "Le Mans",
- 22: "Mozart Requiem Paulus Kirche",
- 23: "Coburg",
- 24: "Frohe Weihnachten"
-};
-
-// ---- Random-Shuffle erzeugen ----
-const container = document.getElementById("kalender");
-let doors = [];
-
-// Liste 1–24 erstellen
-for (let i = 1; i <= 24; i++) {
-    doors.push(i);
-}
-
-// Fisher–Yates Shuffle
-for (let i = doors.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [doors[i], doors[j]] = [doors[j], doors[i]];
-}
-
-// Türchen ins Grid schreiben
-doors.forEach(n => {
-    const d = document.createElement("div");
-    d.className = "door";
-    d.innerText = n;
-    d.onclick = () => openDoor(n);
-    container.appendChild(d);
-});
-
-// ---- Tür öffnen ----
-function openDoor(n){
-  const today = new Date();
-  const day = today.getDate();
-  if(day < n){
-    alert("Erst am " + n + ". Dezember geöffnet!");
-    return;
-  }
-  document.getElementById('content').innerHTML =
-    '<img src="img_'+String(n).padStart(2,'0')+'.jpeg">' +
-    '<p style="font-size: 1.4em; margin-top: 15px; text-align: center;">' +
-    (texts[n] || "") +
-    '</p>';
-}
-</script>
-
-</body>
-</html>
+ 22: "Mozart Requiem Pa
