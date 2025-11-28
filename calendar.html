@@ -4,11 +4,22 @@
 <meta charset="UTF-8">
 <title>Adventskalender 2025 für Sabine</title>
 <style>
-body{font-family:sans-serif;background:#f5efe6;text-align:center;}
-.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:20px;}
+body {
+    font-family: sans-serif;
+    background: #f5efe6;
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin: 20px;
+}
+
 .door {
     background: linear-gradient(135deg, #8b0000, #b30000);
-    color: #fffbe6; /* edles cremeweiß */
+    color: #fffbe6;
     padding: 20px;
     border-radius: 8px;
     cursor: pointer;
@@ -20,6 +31,18 @@ body{font-family:sans-serif;background:#f5efe6;text-align:center;}
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
+.door:hover {
+    transform: scale(1.07);
+    box-shadow: 0 0 20px rgba(255,215,0,0.7);
+}
+
+/* WICHTIG: Bild immer responsive */
+img {
+    max-width: 100%;   /* nie breiter als Bildschirm */
+    height: auto;      /* richtige Proportionen */
+    display: block;
+    margin: 20px auto; /* schön zentriert */
+}
 </style>
 </head>
 <body>
